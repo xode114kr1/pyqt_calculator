@@ -31,6 +31,14 @@ class Main(QDialog):
         button_product = QPushButton("x")
         button_division = QPushButton("/")
 
+        ### 추가 버튼 생성
+        button_moduler = QPushButton("%")
+        button_reciprocal = QPushButton("1/x")
+        button_power = QPushButton("x²")
+        button_sqrt = QPushButton("√x")
+        button_clearEntry = QPushButton("CE")
+        button_double_zero = QPushButton("+/-")
+
         ### 사칙연산 버튼을 클릭했을 때, 각 사칙연산 부호가 수식창에 추가될 수 있도록 시그널 설정
         button_plus.clicked.connect(lambda state, operation = "+": self.button_operation_clicked(operation))
         button_minus.clicked.connect(lambda state, operation = "-": self.button_operation_clicked(operation))
