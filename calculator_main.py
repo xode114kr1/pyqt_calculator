@@ -24,6 +24,8 @@ class Main(QDialog):
         ### layout_display 레이아웃에 수식, 답 위젯을 추가
         layout_display.addRow(self.equation)
 
+        ### layout_equation_solution 레이아웃에 수식, 답 위젯을 추가
+
         ### 사칙연상 버튼 생성
         button_plus = QPushButton("+")
         button_minus = QPushButton("-")
