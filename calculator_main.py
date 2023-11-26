@@ -16,14 +16,13 @@ class Main(QDialog):
         layout_equation_solution = QFormLayout()
 
         ### 수식 입력과 답 출력을 위한 LineEdit 위젯 생성
-        label_equation = QLabel("Equation: ")
-        label_solution = QLabel("Solution: ")
+        
         self.equation = QLineEdit("")
-        self.solution = QLineEdit("")
+        self.expression = ""
+
 
         ### layout_equation_solution 레이아웃에 수식, 답 위젯을 추가
-        layout_equation_solution.addRow(label_equation, self.equation)
-        layout_equation_solution.addRow(label_solution, self.solution)
+        layout_equation_solution.addRow(self.equation)
 
         ### 사칙연상 버튼 생성
         button_plus = QPushButton("+")
@@ -104,20 +103,23 @@ class Main(QDialog):
         equation = self.equation.text()
         equation += str(num)
         self.equation.setText(equation)
+        self.expression += str(num)
 
     def button_operation_clicked(self, operation):
         equation = self.equation.text()
         equation += operation
-        self.equation.setText(equation)
+        self.equation.setText("")
+        self.expression = equation
 
     def button_equal_clicked(self):
-        equation = self.equation.text()
+        equation = self.expression
         solution = eval(equation)
-        self.solution.setText(str(solution))
+        self.equation.setText(str(solution))
+        self.expression = str(solution)
 
     def button_clear_clicked(self):
         self.equation.setText("")
-        self.solution.setText("")
+        self.expression = ""
 
     def button_backspace_clicked(self):
         equation = self.equation.text()
