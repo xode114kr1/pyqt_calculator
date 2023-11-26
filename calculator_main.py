@@ -56,12 +56,20 @@ class Main(QDialog):
         button_clear.clicked.connect(self.button_clear_clicked)
         button_backspace.clicked.connect(self.button_backspace_clicked)
 
+        ### 추가 버튼 클릭시 시그널 생성
+        button_signChange.clicked.connect(self.button_signChange_clicked)
+        button_clearEntry.clicked.connect(self.button_clearEntry_clicked)
+        button_reciprocal.clicked.connect(self.button_reciprocal_clicked)
+
         ### layout_row1 레이아웃에 버튼 추가
+
+        layout_row1.addWidget(button_clearEntry)
         layout_row1.addWidget(button_clear)
         layout_row1.addWidget(button_backspace)
         
 
         ### layout_row2 레이아웃에 버튼 추가
+        layout_row2.addWidget(button_reciprocal)
         layout_row2.addWidget(button_division)
 
         ### layout_number 레이아웃에 버튼 추가
@@ -83,14 +91,13 @@ class Main(QDialog):
             elif number==0:
                 layout_number.addWidget(number_button_dict[number], 3, 1)
 
-        ### 소숫점 버튼과 00 버튼을 입력하고 시그널 설정
+        ### 소숫점 버튼 입력하고 시그널 설정
         button_dot = QPushButton(".")
         button_dot.clicked.connect(lambda state, num = ".": self.number_button_clicked(num))
         layout_number.addWidget(button_dot, 3, 2)
 
-        button_double_zero = QPushButton("00")
-        button_double_zero.clicked.connect(lambda state, num = "00": self.number_button_clicked(num))
-        layout_number.addWidget(button_double_zero, 3, 0)
+        ### +/- 버튼 시그널 생성
+        layout_number.addWidget(button_signChange, 3, 0)
 
         ### 각 레이아웃을 main_layout 레이아웃에 추가
         main_layout.addLayout(layout_display)
@@ -130,6 +137,26 @@ class Main(QDialog):
         equation = self.equation.text()
         equation = equation[:-1]
         self.equation.setText(equation)
+
+    def button_signChange_clicked(self):
+        equation = self.equation.text()
+        self.expression = self.expression[:-len(equation)]
+        equation = '-' + equation
+        self.expression += equation
+        self.equation.setText(equation)
+    
+    def button_clearEntry_clicked(self):
+        equation = self.equation.text()
+        self.expression = self.expression[:-len(equation)]
+        self.equation.setText("")
+
+    def button_reciprocal_clicked(self):
+        equation = self.equation.text()
+        self.expression = self.expression[:-len(equation)]
+        equation = 1 / float(equation)
+        self.expression += str(equation)
+        self.equation.setText(str(equation))
+    
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
