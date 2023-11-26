@@ -1,4 +1,5 @@
 import sys
+import math
 from PyQt5.QtWidgets import *
 
 class Main(QDialog):
@@ -30,7 +31,7 @@ class Main(QDialog):
         button_plus = QPushButton("+")
         button_minus = QPushButton("-")
         button_product = QPushButton("x")
-        button_division = QPushButton("/")
+        button_division = QPushButton("÷")
 
         ### 추가 버튼 생성
         button_moduler = QPushButton("%")
@@ -48,8 +49,8 @@ class Main(QDialog):
 
         ### =, clear, backspace 버튼 생성
         button_equal = QPushButton("=")
-        button_clear = QPushButton("Clear")
-        button_backspace = QPushButton("Backspace")
+        button_clear = QPushButton("C")
+        button_backspace = QPushButton("←")
 
         ### =, clear, backspace 버튼 클릭 시 시그널 설정
         button_equal.clicked.connect(self.button_equal_clicked)
@@ -60,9 +61,12 @@ class Main(QDialog):
         button_signChange.clicked.connect(self.button_signChange_clicked)
         button_clearEntry.clicked.connect(self.button_clearEntry_clicked)
         button_reciprocal.clicked.connect(self.button_reciprocal_clicked)
+        button_power.clicked.connect(self.button_power_clicked)
+        button_sqrt.clicked.connect(self.button_sqrt_clicked)
+        button_moduler.clicked.connect(lambda state, operation = "%": self.button_operation_clicked(operation))
 
         ### layout_row1 레이아웃에 버튼 추가
-
+        layout_row1.addWidget(button_moduler)
         layout_row1.addWidget(button_clearEntry)
         layout_row1.addWidget(button_clear)
         layout_row1.addWidget(button_backspace)
@@ -70,6 +74,8 @@ class Main(QDialog):
 
         ### layout_row2 레이아웃에 버튼 추가
         layout_row2.addWidget(button_reciprocal)
+        layout_row2.addWidget(button_power)
+        layout_row2.addWidget(button_sqrt)
         layout_row2.addWidget(button_division)
 
         ### layout_number 레이아웃에 버튼 추가
@@ -156,6 +162,21 @@ class Main(QDialog):
         equation = 1 / float(equation)
         self.expression += str(equation)
         self.equation.setText(str(equation))
+
+    def button_power_clicked(self):
+        equation = self.equation.text()
+        self.expression = self.expression[:-len(equation)]
+        equation = math.pow(float(equation),2)
+        self.expression += str(equation)
+        self.equation.setText(str(equation))
+    
+    def button_sqrt_clicked(self):
+        equation = self.equation.text()
+        self.expression = self.expression[:-len(equation)]
+        equation = math.sqrt(float(equation))
+        self.expression += str(equation)
+        self.equation.setText(str(equation))
+
     
 
 if __name__ == '__main__':
